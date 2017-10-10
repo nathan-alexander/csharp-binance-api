@@ -23,8 +23,8 @@ namespace BinanceAPI
     {
         private readonly HttpClient _httpClient;
         private string url = "https://www.binance.com/api/";
-        private string key = "EYvxeoTYX67faHSuI7ofg6GE4ImeSY8fJAElWJcKe4ZVlFHlfuVyvYygbzDH7ZX4";
-        private string secret = "eZP2VZmkTlr0DmzyqFoCY2b0CTrYegP9ZiAi9egfVHWTTZfxio2YpStd29ghtn0g";
+        private string key = "key";
+        private string secret = "secret";
 
 
         public BinanceClient()
