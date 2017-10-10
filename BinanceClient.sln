@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceClient", "BinanceClient\BinanceClient.csproj", "{729C7074-2049-436A-B838-3F470027C86D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinanceExecute", "BinanceExecute\BinanceExecute.csproj", "{5B2ABFD7-AE79-480A-A41D-3EAE3EBAA3DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{729C7074-2049-436A-B838-3F470027C86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729C7074-2049-436A-B838-3F470027C86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729C7074-2049-436A-B838-3F470027C86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729C7074-2049-436A-B838-3F470027C86D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B2ABFD7-AE79-480A-A41D-3EAE3EBAA3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B2ABFD7-AE79-480A-A41D-3EAE3EBAA3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B2ABFD7-AE79-480A-A41D-3EAE3EBAA3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B2ABFD7-AE79-480A-A41D-3EAE3EBAA3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
