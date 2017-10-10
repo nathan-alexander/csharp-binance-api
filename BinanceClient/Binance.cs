@@ -6,6 +6,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BinanceAPI
 {
@@ -144,6 +145,7 @@ namespace BinanceAPI
 
             //Task<dynamic> GetCurrentPosition();
             List<Prices> ListPrices(dynamic response);
+            double GetPriceOfSymbol(string symbol, List<Prices> listOfPrices);
         }
 
         public class BinanceService : IBinanceService
@@ -295,7 +297,14 @@ namespace BinanceAPI
                 return prices;
 
             }
+            public double GetPriceOfSymbol(string symbol, List<Prices> prices)
+            {
+                double priceOfSymbol = (from p in prices
+                                     where p.Symbol == symbol
+                                     select p.Price).First();
 
+                return priceOfSymbol;
+            }
 
         }
 
