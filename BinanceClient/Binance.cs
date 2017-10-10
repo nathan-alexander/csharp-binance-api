@@ -129,9 +129,9 @@ namespace BinanceAPI
             //ACCOUNT - GET
             Task<dynamic> GetAccountAsync();
             //MARKET - GET
+            Task<dynamic> GetAllPricesAsync();
             Task<dynamic> GetDepthAsync(string symbol);                 
             Task<dynamic> GetTradesAsync(string symbol);
-            Task<dynamic> GetAllPricesAsync();
             //ORDERS - GET
             Task<dynamic> GetOrdersAsync(string symbol, int limit);
             Task<dynamic> CheckOrderStatusAsync(string symbol, int orderId);
@@ -180,8 +180,6 @@ namespace BinanceAPI
                 return result;
 
             }
-            //Get price of specific symbol
-            //-----TODO
 
             //Get account information
             public async Task<dynamic> GetAccountAsync()
@@ -298,10 +296,6 @@ namespace BinanceAPI
 
             }
 
-            //public async Task<dynamic> GetCurrentPosition()
-            //{
-            //    throw new NotImplementedException();
-            //}
 
         }
 

@@ -6,7 +6,7 @@ using static BinanceAPI.BinanceClient;
 
 namespace BinanceExecute
 {
-    class Program
+    class Examples
     {
         static void Main(string[] args)
         {
@@ -43,6 +43,12 @@ namespace BinanceExecute
             Task.WaitAll(getAllPrices);
             dynamic prices = binanceService.ListPrices(getAllPrices.Result);
             Console.WriteLine(prices);
+
+            //GET PRICE OF SYMBOL
+            var getSymbolPrice = binanceService.GetSymbolPriceAsync("BNBBTC");
+            Task.WaitAll(getSymbolPrice);
+            dynamic symbolPrice = getSymbolPrice.Result;
+            Console.WriteLine(symbolPrice);
 
             //PLACE BUY ORDER
             var placeBuyOrder = binanceService.PlaceBuyOrderAsync("NEOBTC", 1.00, 00.008851);
