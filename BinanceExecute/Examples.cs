@@ -45,11 +45,8 @@ namespace BinanceExecute
             Console.WriteLine(prices);
 
             //GET PRICE OF SYMBOL
-            var getSymbolPrice = binanceService.GetAllPricesAsync();
-            Task.WaitAll(getSymbolPrice);
-            dynamic priceList = binanceService.ListPrices(getAllPrices.Result);
-            double priceOfSymbol = binanceService.GetPriceOfSymbol("BNBBTC", priceList);
-            Console.WriteLine("Price of BNB: " + priceOfSymbol);
+            double symbol = binanceService.GetPriceOfSymbol("BNBBTC");
+            Console.WriteLine("Price of BNB: " + symbol);
 
             //PLACE BUY ORDER
             var placeBuyOrder = binanceService.PlaceBuyOrderAsync("NEOBTC", 1.00, 00.008851);

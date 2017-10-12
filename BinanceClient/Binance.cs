@@ -43,6 +43,23 @@ namespace BinanceAPI
                     .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
           
         }
+
+        public BinanceClient(string apiKey, string apiSecret)
+        {
+            key = apiKey;
+            secret = apiSecret;
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(url)
+
+            };
+            _httpClient.DefaultRequestHeaders
+                 .Add("X-MBX-APIKEY", key);
+
+            _httpClient.DefaultRequestHeaders
+                    .Accept
+                    .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
         // GET
         public async Task<T> GetAsync<T>(string endpoint, string args = null)
         {
@@ -145,7 +162,7 @@ namespace BinanceAPI
 
             //Task<dynamic> GetCurrentPosition();
             List<Prices> ListPrices(dynamic response);
-            double GetPriceOfSymbol(string symbol, List<Prices> listOfPrices);
+            double GetPriceOfSymbol(string symbol);
         }
 
         public class BinanceService : IBinanceService
@@ -297,8 +314,14 @@ namespace BinanceAPI
                 return prices;
 
             }
-            public double GetPriceOfSymbol(string symbol, List<Prices> prices)
+            public double GetPriceOfSymbol(string symbol)
             {
+                List<Prices> prices = new List<Prices>();
+                var task = Task.Run(async () => await _binanceClient.GetAsync<dynamic>("v1/ticker/allPrices"));
+                dynamic result = task.Result;
+                
+                prices = ListPrices(result);
+
                 double priceOfSymbol = (from p in prices
                                      where p.Symbol == symbol
                                      select p.Price).First();
