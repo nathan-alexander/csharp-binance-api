@@ -85,12 +85,12 @@ Console.WriteLine(trades);
 #### Get all the latest prices for all symbols
 Signature
 ```c#
-public async Task<dynamic> GetAllPricesAsync()
+public List<Prices> ListPrices();
 ```
 Example
 ```c#
-var getAllPrices = binanceService.GetAllPricesAsync();           
-dynamic prices = binanceService.ListPrices(getAllPrices.Result);
+List<Prices> prices = new List<Prices>();
+prices = binanceService.ListPrices();
 Console.WriteLine(prices);
 ```
 #### Get the price of a symbol
