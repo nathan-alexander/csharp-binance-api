@@ -1,6 +1,7 @@
 ﻿using BinanceAPI;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static BinanceAPI.BinanceClient;
 
@@ -39,9 +40,8 @@ namespace BinanceExecute
             Console.WriteLine(trades);
 
             //GET ALL PRICES
-            var getAllPrices = binanceService.GetAllPricesAsync();           
-            Task.WaitAll(getAllPrices);
-            dynamic prices = binanceService.ListPrices(getAllPrices.Result);
+            List<Prices> prices = new List<Prices>();
+            prices = binanceService.ListPrices();
             Console.WriteLine(prices);
 
             //GET PRICE OF SYMBOL

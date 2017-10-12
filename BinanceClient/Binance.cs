@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace BinanceAPI
 {
@@ -159,8 +160,7 @@ namespace BinanceAPI
             Task<dynamic> PlaceSellOrderAsync(string symbol, double quantity, double price, string type);
             //ORDERS - DELETE
             Task<dynamic> CancelOrderAsync(string symbol, int orderId);
-
-            //Task<dynamic> GetCurrentPosition();
+            List<Prices> ListPrices();
             List<Prices> ListPrices(dynamic response);
             double GetPriceOfSymbol(string symbol);
         }
@@ -314,6 +314,17 @@ namespace BinanceAPI
                 return prices;
 
             }
+            //Overload for ease of use
+            public List<Prices> ListPrices()
+            {
+                List<Prices> prices = new List<Prices>();
+                var task = Task.Run(async () => await _binanceClient.GetAsync<dynamic>("v1/ticker/allPrices"));
+                dynamic result = task.Result;
+                prices = JsonConvert.DeserializeObject<List<Prices>>(result.ToString());
+                return prices;
+
+            }
+
             public double GetPriceOfSymbol(string symbol)
             {
                 List<Prices> prices = new List<Prices>();
