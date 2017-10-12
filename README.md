@@ -96,14 +96,12 @@ Console.WriteLine(prices);
 #### Get the price of a symbol
 Signature
 ```c#
-public async Task<dynamic> GetOrdersAsync(string symbol, int limit = 500)
+public double GetPriceOfSymbol(string symbol)
 ```
 Example
 ```c#
-var getSymbolPrice = binanceService.GetAllPricesAsync();
-dynamic priceList = binanceService.ListPrices(getAllPrices.Result);
-double priceOfSymbol = binanceService.GetPriceOfSymbol("BNBBTC", priceList);
-Console.WriteLine("Price of BNB: " + priceOfSymbol);
+double symbol = binanceService.GetPriceOfSymbol("BNBBTC");
+Console.WriteLine("Price of BNB: " + symbol);
 ```
 #### Place a BUY order
 Signature
