@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
+
 namespace BinanceAPI
 {
     #region Client
@@ -65,8 +66,9 @@ namespace BinanceAPI
         public async Task<T> GetAsync<T>(string endpoint, string args = null)
         {
             var response = await _httpClient.GetAsync($"{endpoint}?{args}");
+
             if (!response.IsSuccessStatusCode)
-                return default(T);
+                throw new HttpRequestException(response.StatusCode.ToString());
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -81,9 +83,9 @@ namespace BinanceAPI
             
             var signature = args.CreateSignature(secret);
             var response = await _httpClient.GetAsync($"{endpoint}?{args}&signature={signature}");
-            
+
             if (!response.IsSuccessStatusCode)
-                return default(T);
+                throw new HttpRequestException(response.StatusCode.ToString());
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -101,7 +103,7 @@ namespace BinanceAPI
             var response = await _httpClient.PostAsync($"{endpoint}?{args}&signature={signature}", null);
 
             if (!response.IsSuccessStatusCode)
-                return default(T);
+                throw new HttpRequestException(response.StatusCode.ToString());
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -118,7 +120,7 @@ namespace BinanceAPI
             var response = await _httpClient.DeleteAsync($"{endpoint}?{args}&signature={signature}");
 
             if (!response.IsSuccessStatusCode)
-                return default(T);
+                throw new HttpRequestException(response.StatusCode.ToString());
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -148,6 +150,9 @@ namespace BinanceAPI
             //ACCOUNT - GET
             Task<dynamic> GetAccountAsync();
             //MARKET - GET
+            List<Prices> ListPrices();
+            List<Prices> ListPrices(dynamic response);
+            double GetPriceOfSymbol(string symbol);
             Task<dynamic> GetAllPricesAsync();
             Task<dynamic> GetDepthAsync(string symbol);                 
             Task<dynamic> GetTradesAsync(string symbol);
@@ -160,9 +165,7 @@ namespace BinanceAPI
             Task<dynamic> PlaceSellOrderAsync(string symbol, double quantity, double price, string type);
             //ORDERS - DELETE
             Task<dynamic> CancelOrderAsync(string symbol, int orderId);
-            List<Prices> ListPrices();
-            List<Prices> ListPrices(dynamic response);
-            double GetPriceOfSymbol(string symbol);
+
         }
 
         public class BinanceService : IBinanceService
@@ -181,7 +184,7 @@ namespace BinanceAPI
 
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -193,7 +196,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.GetAsync<dynamic>("v1/ticker/allPrices");
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -206,7 +209,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.GetSignedAsync<dynamic>("v3/account");
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -218,7 +221,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.GetSignedAsync<dynamic>("v3/account");
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -229,7 +232,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.GetSignedAsync<dynamic>("v3/allOrders", "symbol=" + symbol + "&" + "limit=" + limit);
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -241,7 +244,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.GetSignedAsync<dynamic>("v3/myTrades", "symbol=" + symbol);
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -249,10 +252,11 @@ namespace BinanceAPI
             //Test LIMIT order
             public async Task<dynamic> PlaceTestOrderAsync(string symbol, string side, double quantity, double price)
             {
+
                 var result = await _binanceClient.PostSignedAsync<dynamic>("v3/order/test", "symbol=" + symbol + "&" + "side=" + side + "&" + "type=LIMIT" + "&" + "quantity=" + quantity.ToString() + "&" + "price=" + price.ToString() + "&" + "timeInForce=GTC" + "&" + "recvWindow=6000");
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -264,7 +268,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.PostSignedAsync<dynamic>("v3/order", "symbol=" + symbol + "&" + "side=BUY" + "&" + "type=" + type + "&" + "quantity=" + quantity.ToString() + "&" + "price=" + price.ToString() + "&" + "timeInForce=GTC" + "&" + "recvWindow=6000");
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -275,7 +279,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.PostSignedAsync<dynamic>("v3/order", "symbol=" + symbol + "&" + "side=SELL" + "&" + "type=" + type + "&" + "quantity=" + quantity.ToString() + "&" + "price=" + price.ToString() + "&" + "timeInForce=GTC" + "&" + "recvWindow=6000");
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -287,7 +291,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.GetSignedAsync<dynamic>("v3/order", "symbol=" + symbol + "&" + "orderId=" + orderId);
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -300,7 +304,7 @@ namespace BinanceAPI
                 var result = await _binanceClient.DeleteSignedAsync<dynamic>("v3/order", "symbol=" + symbol + "&" + "orderId=" + orderId);
                 if (result == null)
                 {
-                    throw new Exception();
+                    throw new NullReferenceException();
                 }
 
                 return result;
@@ -368,6 +372,11 @@ namespace BinanceAPI
     {
         public string Symbol { get; set; }
         public double Price { get; set; }
+    }
+
+    public enum Symbols
+    {
+
     }
 #endregion
 
