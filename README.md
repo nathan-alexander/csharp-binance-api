@@ -67,7 +67,7 @@ public async Task<dynamic> GetOrdersAsync(string symbol, int limit = 500)
 ```
 Example
 ```c#
-var getOrders = binanceService.GetOrdersAsync("BNBBTC");
+var getOrders = binanceService.GetOrdersAsync("BNBBTC", 100);
 dynamic orders = getOrders.Result;
 Console.WriteLine(orders);
 ```
