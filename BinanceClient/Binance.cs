@@ -171,10 +171,14 @@ namespace BinanceAPI
         public class BinanceService : IBinanceService
         {
             private readonly IBinanceClient _binanceClient;
+            private readonly List<Prices> _currentPriceList;
+            
 
             public BinanceService(IBinanceClient binanceClient)
             {
                 _binanceClient = binanceClient;
+                _currentPriceList = ListPrices();
+                
             }
 
             //Get depth of a symbol
@@ -372,11 +376,6 @@ namespace BinanceAPI
     {
         public string Symbol { get; set; }
         public double Price { get; set; }
-    }
-
-    public enum Symbols
-    {
-
     }
 #endregion
 
