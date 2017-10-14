@@ -28,7 +28,7 @@ namespace BinanceExecute
             Console.WriteLine(account);
 
             //GET ORDERS FOR SYMBOL
-            var getOrders = binanceService.GetOrdersAsync("BNBBTC");
+            var getOrders = binanceService.GetOrdersAsync("BNBBTC", 100);
             Task.WaitAll(getOrders);
             dynamic orders = getOrders.Result;
             Console.WriteLine(orders);
